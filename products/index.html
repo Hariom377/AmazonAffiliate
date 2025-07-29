@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Details</title>
-    <meta name="description" content="Detailed review of [Product Name]">
-    <meta property="og:title" content="[Product Name]">
-    <meta property="og:description" content="Detailed review of [Product Name]">
-    <meta property="og:image" content="/assets/images/products/[product-image].jpg">
-    <meta property="og:url" content="https://yourdomain.com/products/[product-slug].html">
+    <title>Product Details</title> <meta name="description" content="Detailed review of a product. Find out pros, cons, and buy on Amazon."> <meta property="og:title" content="Product Name">
+    <meta property="og:description" content="Detailed review of product.">
+    <meta property="og:image" content="https://yourdomain.com/assets/images/og-image.jpg">
+    <meta property="og:url" content="https://yourdomain.com/products/">
     <meta property="og:type" content="product">
+    
+    <link rel="canonical" href="https://yourdomain.com/products/">
+
     <link rel="stylesheet" href="/assets/css/main.css">
     <link rel="stylesheet" href="/assets/css/responsive.css">
 </head>
 <body id="product-page">
     <header>
-        <nav>
+        <nav class="container">
             <a href="/" class="site-logo">Your Logo</a>
             <ul id="main-nav">
                 <li><a href="/">Home</a></li>
@@ -24,64 +25,116 @@
                 <li><a href="/about.html">About</a></li>
                 <li><a href="/contact.html">Contact</a></li>
             </ul>
-            <button class="hamburger-menu">☰</button>
+            <button class="hamburger-menu" aria-label="Toggle navigation">☰</button>
         </nav>
     </header>
 
-    <main id="product-detail-container">
-        <p>Loading product details...</p>
+    <main id="product-detail-container" class="container">
+        <p class="loading-message">Loading product details...</p>
     </main>
 
     <footer>
-        <p>&copy; <span id="current-year"></span> Your Site Name. All rights reserved.</p>
-        <div class="social-links" id="footer-social-links"></div>
-        <ul>
-            <li><a href="/privacy-policy.html">Privacy Policy</a></li>
-            <li><a href="/terms-of-service.html">Terms of Service</a></li>
-            <li><a href="/sitemap.xml">Sitemap</a></li>
-        </ul>
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> Your Site Name. All rights reserved.</p>
+            <div class="social-links" id="footer-social-links"></div>
+            <ul class="footer-nav">
+                <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+                <li><a href="/terms-of-service.html">Terms of Service</a></li>
+                <li><a href="/sitemap.xml">Sitemap</a></li>
+                <li><a href="/about.html">About Us</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+            </ul>
+        </div>
     </footer>
 
     <script src="/assets/js/main.js"></script>
     <script src="/assets/js/seo-optimizer.js"></script>
     <script>
-        // Product page specific rendering logic in main.js
+        // Product page specific rendering logic
+        // This function is called from main.js after data loads
         function renderProductPage() {
-            // Get product ID from URL (e.g., /products/index.html?id=noise-cancelling-headphones)
             const urlParams = new URLSearchParams(window.location.search);
             const productId = urlParams.get('id');
+            const productContainer = document.getElementById('product-detail-container');
 
             if (!productId) {
-                document.getElementById('product-detail-container').innerHTML = "<p>Product not found.</p>";
+                // If no product ID, display all products or a category view
+                const category = urlParams.get('category');
+                const filteredProducts = category 
+                    ? productsData.filter(p => p.category === category)
+                    : productsData;
+
+                if (filteredProducts.length === 0) {
+                    productContainer.innerHTML = `<h1>${category ? `No products found in category "${category}"` : 'No products found.'}</h1>`;
+                    return;
+                }
+
+                productContainer.innerHTML = `
+                    <h1>${category ? `${category} Products` : 'All Products'}</h1>
+                    <div class="product-grid">
+                        ${filteredProducts.map(product => `
+                            <div class="product-card">
+                                <a href="/products/?id=${product.id}">
+                                    <img src="/assets/images/products/${product.images[0]}" alt="${product.name}" loading="lazy">
+                                    <h3>${product.name}</h3>
+                                    <p class="product-price">${product.price}</p>
+                                </a>
+                                <a href="${product.amazonUrl}" target="_blank" rel="nofollow noopener" class="btn-buy-now">Buy on Amazon</a>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                // Set meta tags for category/all products page
+                updateMetaTags(
+                    `${category ? `${category} Products` : 'All Products'} | ${siteConfig.siteTitle}`,
+                    `Browse our selection of ${category ? `${category} ` : ''}products and find the best deals.`,
+                    siteConfig.socialMedia.ogImage || 'https://yourdomain.com/assets/images/og-image.jpg', // Default OG image
+                    window.location.href
+                );
+                setupLazyLoading(); // Initialize lazy loading for product images
                 return;
             }
 
             const product = productsData.find(p => p.id === productId);
 
             if (!product) {
-                document.getElementById('product-detail-container').innerHTML = "<p>Product not found.</p>";
+                productContainer.innerHTML = "<p>Product not found. Please check the URL.</p>";
                 return;
             }
 
             // Populate content
-            document.title = `${product.name} Review | ${siteConfig.siteTitle}`;
-            document.querySelector('meta[name="description"]').setAttribute('content', `Detailed review of ${product.name}. Find out pros, cons, and buy on Amazon.`);
-            document.querySelector('meta[property="og:title"]').setAttribute('content', product.name);
-            document.querySelector('meta[property="og:description"]').setAttribute('content', `Detailed review of ${product.name}. Find out pros, cons, and buy on Amazon.`);
-            document.querySelector('meta[property="og:image"]').setAttribute('content', `/assets/images/products/${product.images[0]}`);
-            document.querySelector('meta[property="og:url"]').setAttribute('content', window.location.href);
+            updateMetaTags(
+                `${product.name} Review | ${siteConfig.siteTitle}`,
+                `Detailed review of ${product.name}. Find out pros, cons, and buy on Amazon.`,
+                `https://yourdomain.com/assets/images/products/${product.images[0]}`, // Replace domain
+                window.location.href
+            );
+            document.querySelector('link[rel="canonical"]').setAttribute('href', window.location.href);
 
-            document.getElementById('product-detail-container').innerHTML = `
+            productContainer.innerHTML = `
                 <section class="product-detail">
                     <h1>${product.name}</h1>
-                    <div class="product-gallery">
-                        ${product.images.map(img => `<img src="/assets/images/products/${img}" alt="${product.name}" loading="lazy">`).join('')}
+                    <div class="product-overview">
+                        <div class="product-gallery">
+                            <img src="/assets/images/products/${product.images[0]}" alt="${product.name}" class="main-product-image" loading="eager">
+                            <div class="thumbnail-gallery">
+                                ${product.images.map(img => `<img src="/assets/images/products/${img}" alt="${product.name} thumbnail" loading="lazy" class="thumbnail">`).join('')}
+                            </div>
+                        </div>
+                        <div class="product-summary">
+                            <p class="product-price">Price: <strong>${product.price}</strong></p>
+                            <div class="rating">Rating: ${product.rating} / 5 stars</div>
+                            <a href="${product.amazonUrl}" target="_blank" rel="nofollow noopener" class="btn-buy-now">Buy on Amazon</a>
+                            <div class="social-share-buttons">
+                                <button onclick="sharePage('facebook')" aria-label="Share on Facebook"><img src="/assets/images/icons/facebook.svg" alt="Facebook"></button>
+                                <button onclick="sharePage('twitter')" aria-label="Share on Twitter"><img src="/assets/images/icons/twitter.svg" alt="Twitter"></button>
+                                <button onclick="sharePage('linkedin')" aria-label="Share on LinkedIn"><img src="/assets/images/icons/linkedin.svg" alt="LinkedIn"></button>
+                            </div>
+                        </div>
                     </div>
-                    <p class="product-price">Price: <strong>${product.price}</strong></p>
-                    <a href="${product.amazonUrl}" target="_blank" rel="nofollow noopener" class="btn-buy-now">Buy on Amazon</a>
 
-                    <div class="product-description">
-                        <h3>Description</h3>
+                    <div class="product-description-full">
+                        <h3>Product Description</h3>
                         <p>${product.description}</p>
                     </div>
 
@@ -96,14 +149,38 @@
                         </div>
                     </div>
 
+                    ${product.comparisonTable ? `
+                        <div class="comparison-table">
+                            <h3>Comparison with Similar Products</h3>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>${product.name}</th>
+                                        ${product.comparisonTable.headers.map(header => `<th>${header}</th>`).join('')}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${product.comparisonTable.rows.map(row => `
+                                        <tr>
+                                            <td>${row.feature}</td>
+                                            <td>${row.value[product.id]}</td>
+                                            ${product.comparisonTable.headers.map(header => `<td>${row.value[header]}</td>`).join('')}
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    ` : ''}
+
                     ${product.faq && product.faq.length > 0 ? `
                         <div class="faq-section">
                             <h3>Frequently Asked Questions</h3>
                             <div class="accordion">
                                 ${product.faq.map((item, index) => `
                                     <div class="accordion-item">
-                                        <button class="accordion-header" id="faq-header-${index}">${item.question}</button>
-                                        <div class="accordion-content" id="faq-content-${index}">
+                                        <button class="accordion-header" id="faq-header-${index}" aria-expanded="false" aria-controls="faq-content-${index}">${item.question}</button>
+                                        <div class="accordion-content" id="faq-content-${index}" role="region" aria-labelledby="faq-header-${index}">
                                             <p>${item.answer}</p>
                                         </div>
                                     </div>
@@ -113,15 +190,17 @@
                     ` : ''}
 
                     <div class="related-products">
-                        <h3>Related Products</h3>
+                        <h3>Related Products You Might Like</h3>
                         <div class="product-grid">
                             ${product.relatedProducts.map(relatedId => {
                                 const relatedProduct = productsData.find(p => p.id === relatedId);
                                 return relatedProduct ? `
                                     <div class="product-card">
-                                        <img src="/assets/images/products/${relatedProduct.images[0]}" alt="${relatedProduct.name}" loading="lazy">
-                                        <h3>${relatedProduct.name}</h3>
-                                        <a href="/products/index.html?id=${relatedProduct.id}" class="btn-secondary">View Details</a>
+                                        <a href="/products/?id=${relatedProduct.id}">
+                                            <img src="/assets/images/products/${relatedProduct.images[0]}" alt="${relatedProduct.name}" loading="lazy">
+                                            <h3>${relatedProduct.name}</h3>
+                                            <p class="product-price">${relatedProduct.price}</p>
+                                        </a>
                                     </div>
                                 ` : '';
                             }).join('')}
@@ -130,14 +209,27 @@
                 </section>
             `;
 
+            // Product image gallery functionality
+            const mainProductImage = document.querySelector('.main-product-image');
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            thumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', () => {
+                    mainProductImage.src = thumbnail.src;
+                });
+            });
+
             // Initialize accordion for FAQ
             const accordionHeaders = document.querySelectorAll('.accordion-header');
             accordionHeaders.forEach(header => {
                 header.addEventListener('click', () => {
                     const content = header.nextElementSibling;
-                    content.classList.toggle('active');
-                    header.classList.toggle('active');
-                    content.style.maxHeight = content.classList.contains('active') ? content.scrollHeight + "px" : "0";
+                    const isActive = header.classList.toggle('active');
+                    header.setAttribute('aria-expanded', isActive);
+                    if (isActive) {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    } else {
+                        content.style.maxHeight = "0";
+                    }
                 });
             });
 
@@ -146,6 +238,28 @@
             if (product.faq && product.faq.length > 0) {
                 generateFAQSchema(product.faq);
             }
+            setupLazyLoading(); // Initialize lazy loading for any newly added images
+        }
+
+        function sharePage(platform) {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(document.title);
+            let shareUrl = '';
+
+            switch(platform) {
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
+                    break;
+                case 'linkedin':
+                    shareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${title}`;
+                    break;
+                default:
+                    return;
+            }
+            window.open(shareUrl, '_blank', 'width=600,height=400');
         }
     </script>
 </body>
