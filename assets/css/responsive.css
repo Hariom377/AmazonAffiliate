@@ -1,0 +1,51 @@
+/* Mobile: 320px - 768px */
+@media (max-width: 768px) {
+    nav {
+        flex-wrap: wrap;
+        padding: 0 15px;
+    }
+
+    #main-nav {
+        display: none; /* Hide by default on mobile */
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    #main-nav.active {
+        display: flex; /* Show when active */
+    }
+
+    .hamburger-menu {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 2rem;
+        cursor: pointer;
+        color: #333;
+    }
+
+    .hero-section {
+        height: 300px;
+    }
+
+    .product-grid {
+        grid-template-columns: 1fr; /* Single column on mobile */
+    }
+
+    .product-detail {
+        grid-template-columns: 1fr; /* Single column for product image/details */
+    }
+
+    .pros-cons {
+        flex-direction: column;
+    }
+}
+
+/* Tablet: 768px - 1024px */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .product-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+}
