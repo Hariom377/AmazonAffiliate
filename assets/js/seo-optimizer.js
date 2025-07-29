@@ -1,39 +1,81 @@
-// assets/js/seo-optimizer.js
+// Function to update common meta tags (title, description, OG tags)
+function updateMetaTags(title, description, imageUrl, url) {
+    document.title = title;
 
-function generateProductSchema(product) {
-  const schema = {
-    "@context": "https://schema.org/",
-    "@type": "Product",
-    "name": product.name,
-    "image": product.images.map(img => `https://yourdomain.com/assets/images/products/${img}`),
-    "description": product.description,
-    "sku": product.id, // Or a more specific SKU if available
-    "mpn": product.id, // Manufacturer Part Number, use ID if no specific MPN
-    "brand": {
-      "@type": "Brand",
-      "name": "Generic Brand" // Replace with actual brand or dynamically fetch
-    },
-    "offers": {
-      "@type": "Offer",
-      "url": product.amazonUrl,
-      "priceCurrency": "USD", // Or dynamically set
-      "price": product.price.replace('$', ''),
-      "itemCondition": "https://schema.org/NewCondition",
-      "availability": "https://schema.org/InStock" // Or dynamically set
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": product.rating,
-      "reviewCount": "100" // Placeholder, needs actual reviews if available
+    let metaDesc = document.querySelector('meta[name="description"]');
+    if (!metaDesc) {
+        metaDesc = document.createElement('meta');
+        metaDesc.name = 'description';
+        document.head.appendChild(metaDesc);
     }
-  };
+    metaDesc.setAttribute('content', description);
 
-  const script = document.createElement('script');
-  script.type = 'application/ld+json';
-  script.textContent = JSON.stringify(schema);
-  document.head.appendChild(script);
+    let ogTitle = document.querySelector('meta[property="og:title"]');
+    if (!ogTitle) {
+        ogTitle = document.createElement('meta');
+        ogTitle.property = 'og:title';
+        document.head.appendChild(ogTitle);
+    }
+    ogTitle.setAttribute('content', title);
+
+    let ogDescription = document.querySelector('meta[property="og:description"]');
+    if (!ogDescription) {
+        ogDescription = document.createElement('meta');
+        ogDescription.property = 'og:description';
+        document.head.appendChild(ogDescription);
+    }
+    ogDescription.setAttribute('content', description);
+
+    let ogImage = document.querySelector('meta[property="og:image"]');
+    if (!ogImage) {
+        ogImage = document.createElement('meta');
+        ogImage.property = 'og:image';
+        document.head.appendChild(ogImage);
+    }
+    ogImage.setAttribute('content', imageUrl);
+
+    let ogUrl = document.querySelector('meta[property="og:url"]');
+    if (!ogUrl) {
+        ogUrl = document.createElement('meta');
+        ogUrl.property = 'og:url';
+        document.head.appendChild(ogUrl);
+    }
+    ogUrl.setAttribute('content', url);
 }
 
+
+// Schema Markup for Product
+function generateProductSchema(product) {
+    const schema = {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        "name": product.name,
+        "image": product.images.map(img => `https://yourdomain.com/assets/images/products/${img}`), // Replace yourdomain.com
+        "description": product.description,
+        "sku": product.id,
+        "mpn": product.id, // Using ID as a placeholder for MPN if not available
+        "brand": {
+            "@type": "Brand",
+            "name": product.brand || "Generic Brand" // Add brand to product.json
+        },
+        "offers": {
+            "@type": "Offer",
+            "url": product.amazonUrl,
+            "priceCurrency": product.currency || "USD", // Add currency to product.json
+            "price": product.price.replace(/[^0-9.]/g, ''), // Clean price string
+            "itemCondition": "https://schema.org/NewCondition",
+            "availability": "https://schema.org/InStock" // Assume in stock, or add to product.json
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": product.rating,
+            "reviewCount": product.reviewCount || "50" // Add reviewCount to product.json
+        }
+    };
+    addSchemaToHead(schema, 'product-schema');
+}
+
+// Schema Markup for FAQ
 function generateFAQSchema(faqs) {
     if (!faqs || faqs.length === 0) return;
 
@@ -49,25 +91,22 @@ function generateFAQSchema(faqs) {
             }
         }))
     };
-
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.textContent = JSON.stringify(faqSchema);
-    document.head.appendChild(script);
+    addSchemaToHead(faqSchema, 'faq-schema');
 }
 
-
-// Function to update meta tags dynamically (for example, on product pages)
-function updateMetaTags(title, description, imageUrl, url) {
-    document.title = title;
-    document.querySelector('meta[name="description"]').setAttribute('content', description);
-    document.querySelector('meta[property="og:title"]').setAttribute('content', title);
-    document.querySelector('meta[property="og:description"]').setAttribute('content', description);
-    document.querySelector('meta[property="og:image"]').setAttribute('content', imageUrl);
-    document.querySelector('meta[property="og:url"]').setAttribute('content', url);
+// Helper function to add schema to head, preventing duplicates
+function addSchemaToHead(schema, id) {
+    let script = document.getElementById(id);
+    if (!script) {
+        script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.id = id;
+        document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify(schema);
 }
 
-// Function to handle lazy loading (add 'lazy' class to images)
+// Lazy Loading Functionality (for images with loading="lazy")
 function setupLazyLoading() {
     const lazyImages = document.querySelectorAll('img[loading="lazy"]');
     if ('IntersectionObserver' in window) {
@@ -75,8 +114,12 @@ function setupLazyLoading() {
             entries.forEach(function(entry) {
                 if (entry.isIntersecting) {
                     let lazyImage = entry.target;
-                    lazyImage.src = lazyImage.dataset.src || lazyImage.src; // Assuming data-src for original
-                    lazyImage.removeAttribute('loading');
+                    // If you used data-src for initial empty image and src for placeholder
+                    // lazyImage.src = lazyImage.dataset.src || lazyImage.src; 
+                    // For simply using loading="lazy", the browser handles it.
+                    // This function ensures the loading attribute is properly recognized.
+                    // No need to change src if already set, just ensure it's there.
+                    lazyImage.removeAttribute('loading'); // Browser will load it now
                     lazyLoadObserver.unobserve(lazyImage);
                 }
             });
@@ -88,12 +131,9 @@ function setupLazyLoading() {
     } else {
         // Fallback for browsers that don't support IntersectionObserver
         lazyImages.forEach(img => {
-            img.src = img.dataset.src || img.src;
+            // If you used data-src, uncomment this:
+            // img.src = img.dataset.src || img.src;
             img.removeAttribute('loading');
         });
     }
 }
-
-// Call lazy loading setup when main.js loads product content
-// document.addEventListener('DOMContentLoaded', setupLazyLoading);
-// Or call it after product content is rendered
