@@ -3,65 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Post Title</title>
-    <meta name="description" content="Blog post excerpt for SEO">
+    <title>Blog Post Title</title> <meta name="description" content="Blog post excerpt for SEO"> <meta property="og:title" content="Blog Post Title">
+    <meta property="og:description" content="Blog post excerpt.">
+    <meta property="og:image" content="https://yourdomain.com/assets/images/blog/default-blog-og.jpg">
+    <meta property="og:url" content="https://yourdomain.com/blog/post.html">
+    <meta property="og:type" content="article">
+    
+    <link rel="canonical" href="https://yourdomain.com/blog/post.html">
+
     <link rel="stylesheet" href="/assets/css/main.css">
     <link rel="stylesheet" href="/assets/css/responsive.css">
 </head>
 <body id="blog-post-page">
-    <header></header>
-    <main id="blog-post-content">
-        <p>Loading blog post...</p>
+    <header>
+        <nav class="container">
+            <a href="/" class="site-logo">Your Logo</a>
+            <ul id="main-nav">
+                <li><a href="/">Home</a></li>
+                <li><a href="/products/">Products</a></li>
+                <li><a href="/blog/">Blog</a></li>
+                <li><a href="/about.html">About</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+            </ul>
+            <button class="hamburger-menu" aria-label="Toggle navigation">☰</button>
+        </nav>
+    </header>
+
+    <main id="blog-post-content" class="container">
+        <p class="loading-message">Loading blog post...</p>
     </main>
-    <footer></footer>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year-post"></span> Your Site Name. All rights reserved.</p>
+            <div class="social-links" id="footer-social-links-post"></div>
+            <ul class="footer-nav">
+                <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+                <li><a href="/terms-of-service.html">Terms of Service</a></li>
+                <li><a href="/sitemap.xml">Sitemap</a></li>
+                <li><a href="/about.html">About Us</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </footer>
+
     <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/seo-optimizer.js"></script>
     <script>
-        // This part would be in main.js, triggered if body.id is 'blog-post-page'
+        // Blog post specific rendering logic
+        // This function is called from main.js after data loads
         async function renderBlogPostPage() {
             const urlParams = new URLSearchParams(window.location.search);
             const postSlug = urlParams.get('slug');
+            const postContentDiv = document.getElementById('blog-post-content');
 
             if (!postSlug) {
-                document.getElementById('blog-post-content').innerHTML = "<p>Blog post not found.</p>";
+                postContentDiv.innerHTML = "<p>Blog post not found. Please check the URL.</p>";
                 return;
             }
+            
+            // Ensure blogPostsData is loaded from main.js
+            if (!blogPostsData || blogPostsData.length === 0) {
+                 await loadBlogData(); // Ensure blog data is loaded if not already
+            }
 
-            const blogPostsResponse = await fetch('/config/blog.json');
-            const blogPostsData = (await blogPostsResponse.json()).posts;
             const post = blogPostsData.find(p => p.slug === postSlug);
 
             if (!post) {
-                document.getElementById('blog-post-content').innerHTML = "<p>Blog post not found.</p>";
+                postContentDiv.innerHTML = "<p>Blog post not found.</p>";
                 return;
             }
 
-            // Dynamically set meta tags
-            document.title = `${post.title} | ${siteConfig.siteTitle}`;
-            document.querySelector('meta[name="description"]').setAttribute('content', post.excerpt);
+            // Dynamically set meta tags and canonical URL
+            updateMetaTags(
+                `${post.title} | ${siteConfig.siteTitle}`,
+                post.excerpt,
+                `https://yourdomain.com/assets/images/blog/${post.thumbnail || 'default-blog-og.jpg'}`, // Replace domain
+                window.location.href
+            );
+            document.querySelector('link[rel="canonical"]').setAttribute('href', window.location.href);
 
-            // Fetch actual content from a static HTML file
+
             try {
+                // Fetch actual content from a static HTML file
                 const contentResponse = await fetch(`/blog/content/${post.contentFile}`);
+                if (!contentResponse.ok) {
+                    throw new Error(`HTTP error! status: ${contentResponse.status}`);
+                }
                 const postContentHtml = await contentResponse.text();
 
-                document.getElementById('blog-post-content').innerHTML = `
+                postContentDiv.innerHTML = `
                     <article class="blog-article">
                         <h1>${post.title}</h1>
                         <p class="post-meta">By ${post.author} on ${post.date} | Category: ${post.category}</p>
+                        ${post.image ? `<img src="/assets/images/blog/${post.image}" alt="${post.title}" class="blog-post-main-image" loading="eager">` : ''}
                         <div class="article-body">
                             ${postContentHtml}
                         </div>
-                        </article>
+                        <div class="social-share-buttons">
+                            <button onclick="sharePage('facebook')" aria-label="Share on Facebook"><img src="/assets/images/icons/facebook.svg" alt="Facebook"></button>
+                            <button onclick="sharePage('twitter')" aria-label="Share on Twitter"><img src="/assets/images/icons/twitter.svg" alt="Twitter"></button>
+                            <button onclick="sharePage('linkedin')" aria-label="Share on LinkedIn"><img src="/assets/images/icons/linkedin.svg" alt="LinkedIn"></button>
+                        </div>
+                    </article>
                 `;
             } catch (e) {
-                document.getElementById('blog-post-content').innerHTML = "<p>Error loading post content.</p>";
+                postContentDiv.innerHTML = `<p>Error loading blog post content: ${e.message}</p>`;
                 console.error("Failed to load blog post content:", e);
             }
+            document.getElementById('current-year-post').textContent = new Date().getFullYear();
+            // Populate footer social links (same logic as homepage)
+            const footerSocialLinks = document.getElementById('footer-social-links-post');
+            if (siteConfig.socialMedia && footerSocialLinks) {
+                footerSocialLinks.innerHTML = '';
+                for (const platform in siteConfig.socialMedia) {
+                    if (siteConfig.socialMedia[platform]) {
+                        footerSocialLinks.innerHTML += `
+                            <a href="${siteConfig.socialMedia[platform]}" target="_blank" rel="noopener noreferrer" aria-label="${platform}">
+                                <img src="/assets/images/icons/${platform}.svg" alt="${platform} Icon" onerror="this.onerror=null;this.src='/assets/images/icons/default.svg';">
+                            </a>
+                        `;
+                    }
+                }
+            }
+            setupLazyLoading();
         }
 
-        // Add this to your main.js loadData function or call directly on this page
-        if (document.body.id === 'blog-post-page') {
-            document.addEventListener('DOMContentLoaded', renderBlogPostPage);
+        function sharePage(platform) {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(document.title);
+            let shareUrl = '';
+
+            switch(platform) {
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
+                    break;
+                case 'linkedin':
+                    shareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${title}`;
+                    break;
+                default:
+                    return;
+            }
+            window.open(shareUrl, '_blank', 'width=600,height=400');
         }
     </script>
 </body>
