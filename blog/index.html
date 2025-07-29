@@ -3,53 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Blog - Latest Tech Insights</title>
-    <meta name="description" content="Stay updated with the latest tech trends, reviews, and insights from our blog.">
-    <link rel="stylesheet" href="/assets/css/main.css">
+    <title>Our Blog | Latest Tech Insights</title>
+    <meta name="description" content="Stay updated with the latest tech trends, in-depth reviews, guides, and insights from our expert blog.">
+    
+    <meta property="og:title" content="Our Blog | Latest Tech Insights">
+    <meta property="og:description" content="Stay updated with the latest tech trends, in-depth reviews, guides, and insights from our expert blog.">
+    <meta property="og:image" content="https://yourdomain.com/assets/images/blog/blog-og-image.jpg"> <meta property="og:url" content="https://yourdomain.com/blog/"> <meta property="og:type" content="blog">
+    
+    <link rel="canonical" href="https://yourdomain.com/blog/"> <link rel="stylesheet" href="/assets/css/main.css">
     <link rel="stylesheet" href="/assets/css/responsive.css">
 </head>
 <body id="blog-archive-page">
-    <header></header>
+    <header>
+        <nav class="container">
+            <a href="/" class="site-logo">Your Logo</a>
+            <ul id="main-nav">
+                <li><a href="/">Home</a></li>
+                <li><a href="/products/">Products</a></li>
+                <li><a href="/blog/">Blog</a></li>
+                <li><a href="/about.html">About</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+            </ul>
+            <button class="hamburger-menu" aria-label="Toggle navigation">☰</button>
+        </nav>
+    </header>
+
     <main>
-        <section class="blog-archive">
+        <section class="blog-archive container">
             <h1>Our Blog</h1>
             <div class="blog-filters">
                 </div>
             <div class="blog-posts-list" id="blog-posts-list">
-                <p>Loading blog posts...</p>
+                <p class="loading-message">Loading blog posts...</p>
             </div>
         </section>
     </main>
-    <footer></footer>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year-blog"></span> Your Site Name. All rights reserved.</p>
+            <div class="social-links" id="footer-social-links-blog"></div>
+            <ul class="footer-nav">
+                <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+                <li><a href="/terms-of-service.html">Terms of Service</a></li>
+                <li><a href="/sitemap.xml">Sitemap</a></li>
+                <li><a href="/about.html">About Us</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </footer>
+
     <script src="/assets/js/main.js"></script>
     <script>
-        // Load blog data similar to products
-        let blogPostsData = [];
-
-        async function loadBlogData() {
-            try {
-                const response = await fetch('/config/blog.json');
-                blogPostsData = (await response.json()).posts;
-                renderBlogArchive();
-            } catch (error) {
-                console.error("Error loading blog data:", error);
-            }
-        }
-
-        function renderBlogArchive() {
+        // Blog archive specific rendering logic
+        // This function is called from main.js after data loads
+        function renderBlogArchivePage() {
             const blogList = document.getElementById('blog-posts-list');
-            if (blogList) {
+            if (blogList && blogPostsData.length > 0) {
                 blogList.innerHTML = blogPostsData.map(post => `
                     <div class="blog-post-card">
-                        <h2><a href="/blog/post.html?slug=${post.slug}">${post.title}</a></h2>
-                        <p class="post-meta">By ${post.author} on ${post.date} | Category: ${post.category}</p>
-                        <p>${post.excerpt}</p>
-                        <a href="/blog/post.html?slug=${post.slug}" class="btn-secondary">Read More</a>
+                        <a href="/blog/post.html?slug=${post.slug}">
+                            <img src="/assets/images/blog/${post.thumbnail || 'default-blog-thumbnail.jpg'}" alt="${post.title}" loading="lazy">
+                            <h2>${post.title}</h2>
+                            <p class="post-meta">By ${post.author} on ${post.date} | Category: ${post.category}</p>
+                            <p>${post.excerpt}</p>
+                            <span class="btn-secondary">Read More</span>
+                        </a>
                     </div>
                 `).join('');
+            } else if (blogList) {
+                blogList.innerHTML = "<p>No blog posts found.</p>";
             }
+            document.getElementById('current-year-blog').textContent = new Date().getFullYear();
+            // Populate footer social links (same logic as homepage)
+            const footerSocialLinks = document.getElementById('footer-social-links-blog');
+            if (siteConfig.socialMedia && footerSocialLinks) {
+                footerSocialLinks.innerHTML = '';
+                for (const platform in siteConfig.socialMedia) {
+                    if (siteConfig.socialMedia[platform]) {
+                        footerSocialLinks.innerHTML += `
+                            <a href="${siteConfig.socialMedia[platform]}" target="_blank" rel="noopener noreferrer" aria-label="${platform}">
+                                <img src="/assets/images/icons/${platform}.svg" alt="${platform} Icon" onerror="this.onerror=null;this.src='/assets/images/icons/default.svg';">
+                            </a>
+                        `;
+                    }
+                }
+            }
+            setupLazyLoading();
         }
-        document.addEventListener('DOMContentLoaded', loadBlogData);
     </script>
 </body>
 </html>
