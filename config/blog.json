@@ -1,0 +1,24 @@
+{
+  "posts": [
+    {
+      "slug": "best-laptops-2025",
+      "title": "The Best Laptops of 2025 for Every Budget",
+      "author": "TechSavvy Reviewer",
+      "date": "2025-07-29",
+      "category": "Laptops",
+      "excerpt": "Looking for a new laptop? We've rounded up the top contenders for gaming, work, and everyday use in 2025...",
+      "keywords": ["laptops", "best laptops", "gaming laptop", "work laptop", "2025 tech"],
+      "contentFile": "best-laptops-2025.html"
+    },
+    {
+      "slug": "smart-home-essentials",
+      "title": "Smart Home Essentials: Devices to Elevate Your Living",
+      "author": "TechSavvy Reviewer",
+      "date": "2025-07-20",
+      "category": "Smart Home",
+      "excerpt": "Transform your home into a smart oasis with these must-have devices...",
+      "keywords": ["smart home", "smart devices", "home automation", "smart lighting"],
+      "contentFile": "smart-home-essentials.html"
+    }
+  ]
+}
