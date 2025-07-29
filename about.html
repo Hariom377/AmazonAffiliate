@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Best Gadgets Ever</title>
+    <meta name="description" content="Learn more about Best Gadgets Ever, our mission to provide unbiased tech reviews, and our commitment to helping you make informed purchasing decisions.">
+    
+    <meta property="og:title" content="About Us | Best Gadgets Ever">
+    <meta property="og:description" content="Learn more about Best Gadgets Ever, our mission to provide unbiased tech reviews, and our commitment to helping you make informed purchasing decisions.">
+    <meta property="og:image" content="https://yourdomain.com/assets/images/about-og-image.jpg">
+    <meta property="og:url" content="https://yourdomain.com/about.html">
+    <meta property="og:type" content="website">
+    
+    <link rel="canonical" href="https://yourdomain.com/about.html">
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+</head>
+<body id="about-page">
+    <header>
+        <nav class="container">
+            <a href="/" class="site-logo">Your Logo</a>
+            <ul id="main-nav">
+                <li><a href="/">Home</a></li>
+                <li><a href="/products/">Products</a></li>
+                <li><a href="/blog/">Blog</a></li>
+                <li><a href="/about.html">About</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+            </ul>
+            <button class="hamburger-menu" aria-label="Toggle navigation">☰</button>
+        </nav>
+    </header>
+
+    <main class="container static-page-content">
+        <h1>About Best Gadgets Ever</h1>
+        <p>Welcome to Best Gadgets Ever, your trusted source for comprehensive and unbiased reviews of the latest technology. Our mission is to cut through the marketing jargon and provide you with clear, concise, and actionable insights to help you choose the best gadgets for your needs.</p>
+        <p>Founded by [Your Name/Team Name] in [Year], we are passionate about technology and believe in empowering consumers with accurate information. We spend countless hours researching, testing, and comparing products across various categories, from smartphones and laptops to smart home devices and audio gear.</p>
+        
+        <h2>Our Commitment</h2>
+        <ul>
+            <li><strong>Unbiased Reviews:</strong> We pride ourselves on delivering honest opinions. Our recommendations are based solely on product performance, value, and user experience.</li>
+            <li><strong>In-depth Research:</strong> Every review is backed by thorough research and hands-on testing where possible.</li>
+            <li><strong>User-Focused:</strong> We answer the questions you have, highlight the features that matter, and simplify complex tech concepts.</li>
+        </ul>
+
+        <h2>Amazon Affiliate Disclosure</h2>
+        <p>Best Gadgets Ever is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com. This means that when you click on links to Amazon products on our site and make a purchase, we may earn a small commission at no extra cost to you. This helps support our work and allows us to continue providing valuable content.</p>
+        <p>Thank you for supporting Best Gadgets Ever!</p>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year-about"></span> Your Site Name. All rights reserved.</p>
+            <div class="social-links" id="footer-social-links-about"></div>
+            <ul class="footer-nav">
+                <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+                <li><a href="/terms-of-service.html">Terms of Service</a></li>
+                <li><a href="/sitemap.xml">Sitemap</a></li>
+                <li><a href="/about.html">About Us</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script src="/assets/js/main.js"></script>
+    <script>
+        // Specific script for static pages to ensure footer is populated
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('current-year-about').textContent = new Date().getFullYear();
+            // Populate footer social links (same logic as homepage)
+            const footerSocialLinks = document.getElementById('footer-social-links-about');
+            if (siteConfig.socialMedia && footerSocialLinks) {
+                footerSocialLinks.innerHTML = '';
+                for (const platform in siteConfig.socialMedia) {
+                    if (siteConfig.socialMedia[platform]) {
+                        footerSocialLinks.innerHTML += `
+                            <a href="${siteConfig.socialMedia[platform]}" target="_blank" rel="noopener noreferrer" aria-label="${platform}">
+                                <img src="/assets/images/icons/${platform}.svg" alt="${platform} Icon" onerror="this.onerror=null;this.src='/assets/images/icons/default.svg';">
+                            </a>
+                        `;
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
