@@ -5,29 +5,49 @@
         padding: 0 15px;
     }
 
+    .site-logo {
+        flex-grow: 1; /* Allows logo to take available space */
+    }
+
     #main-nav {
         display: none; /* Hide by default on mobile */
         flex-direction: column;
         width: 100%;
         text-align: center;
         margin-top: 10px;
+        background-color: #fefefe; /* Background for dropdown menu */
+        border-top: 1px solid #eee;
     }
 
     #main-nav.active {
         display: flex; /* Show when active */
     }
 
+    #main-nav li {
+        border-bottom: 1px solid #eee; /* Separator for menu items */
+    }
+    #main-nav li:last-child {
+        border-bottom: none;
+    }
+
+    #main-nav li a {
+        padding: 1rem;
+    }
+
     .hamburger-menu {
-        display: block;
-        background: none;
-        border: none;
-        font-size: 2rem;
-        cursor: pointer;
-        color: #333;
+        display: block; /* Show hamburger on mobile */
     }
 
     .hero-section {
-        height: 300px;
+        height: 250px; /* Smaller hero on mobile */
+    }
+
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .hero-content p {
+        font-size: 1rem;
     }
 
     .product-grid {
@@ -35,17 +55,34 @@
     }
 
     .product-detail {
-        grid-template-columns: 1fr; /* Single column for product image/details */
+        grid-template-columns: 1fr; /* Single column for product image/details on mobile */
     }
 
     .pros-cons {
+        flex-direction: column; /* Stack pros/cons vertically */
+    }
+
+    .newsletter-signup form {
+        flex-direction: column; /* Stack input and button */
+        align-items: center;
+    }
+    .newsletter-signup input[type="email"] {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    footer ul {
         flex-direction: column;
+        gap: 10px;
     }
 }
 
 /* Tablet: 768px - 1024px */
 @media (min-width: 769px) and (max-width: 1024px) {
     .product-grid {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 2-3 columns */
+    }
+    .product-detail {
+        grid-template-columns: 1fr 1.5fr; /* Adjust for tablet */
     }
 }
