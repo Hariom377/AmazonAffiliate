@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post Title</title>
+    <meta name="description" content="Blog post excerpt for SEO">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+</head>
+<body id="blog-post-page">
+    <header></header>
+    <main id="blog-post-content">
+        <p>Loading blog post...</p>
+    </main>
+    <footer></footer>
+    <script src="/assets/js/main.js"></script>
+    <script>
+        // This part would be in main.js, triggered if body.id is 'blog-post-page'
+        async function renderBlogPostPage() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const postSlug = urlParams.get('slug');
+
+            if (!postSlug) {
+                document.getElementById('blog-post-content').innerHTML = "<p>Blog post not found.</p>";
+                return;
+            }
+
+            const blogPostsResponse = await fetch('/config/blog.json');
+            const blogPostsData = (await blogPostsResponse.json()).posts;
+            const post = blogPostsData.find(p => p.slug === postSlug);
+
+            if (!post) {
+                document.getElementById('blog-post-content').innerHTML = "<p>Blog post not found.</p>";
+                return;
+            }
+
+            // Dynamically set meta tags
+            document.title = `${post.title} | ${siteConfig.siteTitle}`;
+            document.querySelector('meta[name="description"]').setAttribute('content', post.excerpt);
+
+            // Fetch actual content from a static HTML file
+            try {
+                const contentResponse = await fetch(`/blog/content/${post.contentFile}`);
+                const postContentHtml = await contentResponse.text();
+
+                document.getElementById('blog-post-content').innerHTML = `
+                    <article class="blog-article">
+                        <h1>${post.title}</h1>
+                        <p class="post-meta">By ${post.author} on ${post.date} | Category: ${post.category}</p>
+                        <div class="article-body">
+                            ${postContentHtml}
+                        </div>
+                        </article>
+                `;
+            } catch (e) {
+                document.getElementById('blog-post-content').innerHTML = "<p>Error loading post content.</p>";
+                console.error("Failed to load blog post content:", e);
+            }
+        }
+
+        // Add this to your main.js loadData function or call directly on this page
+        if (document.body.id === 'blog-post-page') {
+            document.addEventListener('DOMContentLoaded', renderBlogPostPage);
+        }
+    </script>
+</body>
+</html>
