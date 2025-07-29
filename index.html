@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Site Name - Homepage</title>
-    <meta name="description" content="Your site description for SEO">
-    <meta property="og:title" content="Your Site Name - Homepage">
-    <meta property="og:description" content="Your site description for SEO">
-    <meta property="og:image" content="/assets/images/og-image.jpg">
-    <meta property="og:url" content="https://yourdomain.com/">
-    <meta property="og:type" content="website">
-
-    <link rel="stylesheet" href="/assets/css/main.css">
+    <title>Homepage | Best Gadgets Ever</title>
+    <meta name="description" content="Discover the latest and greatest gadgets with in-depth reviews and expert recommendations. Find the best tech products on Amazon.">
+    
+    <meta property="og:title" content="Homepage | Best Gadgets Ever">
+    <meta property="og:description" content="Discover the latest and greatest gadgets with in-depth reviews and expert recommendations. Find the best tech products on Amazon.">
+    <meta property="og:image" content="https://yourdomain.com/assets/images/og-image.jpg"> <meta property="og:url" content="https://yourdomain.com/"> <meta property="og:type" content="website">
+    
+    <link rel="canonical" href="https://yourdomain.com/"> <link rel="stylesheet" href="/assets/css/main.css">
     <link rel="stylesheet" href="/assets/css/responsive.css">
 </head>
 <body id="homepage">
     <header>
-        <nav>
+        <nav class="container">
             <a href="/" class="site-logo">Your Logo</a>
             <ul id="main-nav">
                 <li><a href="/">Home</a></li>
@@ -25,135 +24,135 @@
                 <li><a href="/about.html">About</a></li>
                 <li><a href="/contact.html">Contact</a></li>
             </ul>
-            <button class="hamburger-menu">☰</button>
+            <button class="hamburger-menu" aria-label="Toggle navigation">☰</button>
         </nav>
     </header>
 
     <main>
-
-
-        <!---
         <section class="hero-section">
-            <img src="/assets/images/hero-banner.jpg" alt="Hero Banner" class="hero-image">
+            <img src="/assets/images/hero-banner.jpg" alt="Hero banner showcasing latest tech gadgets" class="hero-image" loading="eager">
             <div class="hero-content">
                 <h1>Discover the Best Gadgets for Your Life</h1>
                 <p>In-depth reviews, comparisons, and expert recommendations for tech enthusiasts.</p>
                 <a href="/products/" class="btn-primary">Explore Products</a>
             </div>
-        </section> -->
+        </section>
 
-
-<section class="hero-section">
-    <img src="/assets/images/hero-banner.jpg" alt="Discover the best gadgets" class="hero-image">
-    <div class="hero-content">
-        <h1>Discover the Best Gadgets for Your Life</h1>
-        <p>In-depth reviews, comparisons, and expert recommendations for tech enthusiasts.</p>
-        <a href="/products/" class="btn-primary">Explore Products</a>
-    </div>
-</section>
-
-
-
-
-        
-
-        <section class="featured-products">
+        <section class="featured-products container">
             <h2>Featured Products</h2>
             <div class="product-grid" id="featured-products-grid">
                 </div>
         </section>
 
-        <section class="best-of-categories">
-            <h2>Best Of Categories</h2>
+        <section class="best-of-categories container">
+            <h2>Top Categories</h2>
             <div class="categories-grid" id="categories-grid">
                 </div>
         </section>
 
-        <section class="recent-blog-posts">
+        <section class="recent-blog-posts container">
             <h2>Latest Insights from Our Blog</h2>
             <div class="blog-posts-grid" id="recent-blog-posts-grid">
                 </div>
         </section>
 
         <section class="newsletter-signup">
-            <h2>Stay Updated!</h2>
-            <p>Get the latest tech reviews and deals directly in your inbox.</p>
-            <form action="#" method="POST">
-                <input type="email" placeholder="Enter your email" required>
-                <button type="submit" class="btn-primary">Subscribe</button>
-            </form>
+            <div class="container">
+                <h2>Stay Updated!</h2>
+                <p>Get the latest tech reviews and deals directly in your inbox.</p>
+                <form action="#" method="POST" class="newsletter-form">
+                    <input type="email" placeholder="Enter your email" required aria-label="Enter your email for newsletter">
+                    <button type="submit" class="btn-primary">Subscribe</button>
+                </form>
+            </div>
         </section>
 
-        <section class="trust-signals">
+        <section class="trust-signals container">
             <p>As an Amazon Associate, we earn from qualifying purchases.</p>
             </section>
     </main>
 
     <footer>
-        <p>&copy; <span id="current-year"></span> Your Site Name. All rights reserved.</p>
-        <div class="social-links" id="footer-social-links">
-            </div>
-        <ul>
-            <li><a href="/privacy-policy.html">Privacy Policy</a></li>
-            <li><a href="/terms-of-service.html">Terms of Service</a></li>
-            <li><a href="/sitemap.xml">Sitemap</a></li>
-        </ul>
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> Your Site Name. All rights reserved.</p>
+            <div class="social-links" id="footer-social-links">
+                </div>
+            <ul class="footer-nav">
+                <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+                <li><a href="/terms-of-service.html">Terms of Service</a></li>
+                <li><a href="/sitemap.xml">Sitemap</a></li>
+                <li><a href="/about.html">About Us</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+            </ul>
+        </div>
     </footer>
 
     <script src="/assets/js/main.js"></script>
-    <script>
+    <script src="/assets/js/seo-optimizer.js"></script> <script>
         // Homepage specific rendering logic
+        // This function is called from main.js after data loads
         function renderHomePage() {
             // Populate featured products
             const featuredGrid = document.getElementById('featured-products-grid');
-            if (featuredGrid) {
+            if (featuredGrid && productsData.length > 0) {
                 const featuredProducts = productsData.slice(0, 8); // Get first 8 products
                 featuredGrid.innerHTML = featuredProducts.map(product => `
                     <div class="product-card">
-                        <img src="/assets/images/products/${product.images[0]}" alt="${product.name}" loading="lazy">
-                        <h3>${product.name}</h3>
-                        <p class="product-price">${product.price}</p>
-                        <a href="/products/${product.id}.html" class="btn-secondary">View Details</a>
+                        <a href="/products/?id=${product.id}">
+                            <img src="/assets/images/products/${product.images[0]}" alt="${product.name}" loading="lazy">
+                            <h3>${product.name}</h3>
+                            <p class="product-price">${product.price}</p>
+                        </a>
+                        <a href="${product.amazonUrl}" target="_blank" rel="nofollow noopener" class="btn-buy-now">Buy on Amazon</a>
                     </div>
                 `).join('');
             }
 
-            // Populate categories (example, needs unique category list from productsData)
+            // Populate categories
             const categoriesGrid = document.getElementById('categories-grid');
-            if (categoriesGrid) {
+            if (categoriesGrid && productsData.length > 0) {
                 const uniqueCategories = [...new Set(productsData.map(p => p.category))];
                 categoriesGrid.innerHTML = uniqueCategories.map(category => `
-                    <a href="/products/index.html?category=${encodeURIComponent(category)}" class="category-card">
+                    <a href="/products/?category=${encodeURIComponent(category)}" class="category-card">
                         <h4>${category}</h4>
                     </a>
                 `).join('');
             }
 
-            // Populate recent blog posts (placeholder, as blog data isn't in JSON yet)
+            // Populate recent blog posts (assuming blogData is loaded in main.js)
             const blogGrid = document.getElementById('recent-blog-posts-grid');
-            if (blogGrid) {
-                // You'll need a similar blog.json structure or manually update for now
-                blogGrid.innerHTML = `
+            if (blogGrid && blogPostsData.length > 0) {
+                const recentPosts = blogPostsData.slice(0, 3); // Get latest 3 posts
+                blogGrid.innerHTML = recentPosts.map(post => `
                     <div class="blog-card">
-                        <h3><a href="/blog/best-laptops-2025.html">Best Laptops of 2025</a></h3>
-                        <p>Discover the top laptops for every need and budget...</p>
+                        <a href="/blog/post.html?slug=${post.slug}">
+                            <h3>${post.title}</h3>
+                            <p class="post-meta">By ${post.author} on ${post.date}</p>
+                            <p>${post.excerpt}</p>
+                        </a>
                     </div>
-                    <div class="blog-card">
-                        <h3><a href="/blog/smart-home-essentials.html">Smart Home Essentials</a></h3>
-                        <p>Transform your living space with these smart devices...</p>
-                    </div>
-                `;
+                `).join('');
             }
 
+            // Set current year in footer
             document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // Populate footer social links
             const footerSocialLinks = document.getElementById('footer-social-links');
             if (siteConfig.socialMedia && footerSocialLinks) {
+                footerSocialLinks.innerHTML = ''; // Clear existing content
                 for (const platform in siteConfig.socialMedia) {
                     if (siteConfig.socialMedia[platform]) {
-                        footerSocialLinks.innerHTML += `<a href="${siteConfig.socialMedia[platform]}" target="_blank" aria-label="${platform}"><img src="/assets/images/icons/${platform}.svg" alt="${platform} Icon"></a>`;
+                        footerSocialLinks.innerHTML += `
+                            <a href="${siteConfig.socialMedia[platform]}" target="_blank" rel="noopener noreferrer" aria-label="${platform}">
+                                <img src="/assets/images/icons/${platform}.svg" alt="${platform} Icon" onerror="this.onerror=null;this.src='/assets/images/icons/default.svg';">
+                            </a>
+                        `;
                     }
                 }
             }
+            // Initialize lazy loading after content is rendered
+            setupLazyLoading();
         }
     </script>
 </body>
