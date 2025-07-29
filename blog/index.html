@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Blog - Latest Tech Insights</title>
+    <meta name="description" content="Stay updated with the latest tech trends, reviews, and insights from our blog.">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+</head>
+<body id="blog-archive-page">
+    <header></header>
+    <main>
+        <section class="blog-archive">
+            <h1>Our Blog</h1>
+            <div class="blog-filters">
+                </div>
+            <div class="blog-posts-list" id="blog-posts-list">
+                <p>Loading blog posts...</p>
+            </div>
+        </section>
+    </main>
+    <footer></footer>
+    <script src="/assets/js/main.js"></script>
+    <script>
+        // Load blog data similar to products
+        let blogPostsData = [];
+
+        async function loadBlogData() {
+            try {
+                const response = await fetch('/config/blog.json');
+                blogPostsData = (await response.json()).posts;
+                renderBlogArchive();
+            } catch (error) {
+                console.error("Error loading blog data:", error);
+            }
+        }
+
+        function renderBlogArchive() {
+            const blogList = document.getElementById('blog-posts-list');
+            if (blogList) {
+                blogList.innerHTML = blogPostsData.map(post => `
+                    <div class="blog-post-card">
+                        <h2><a href="/blog/post.html?slug=${post.slug}">${post.title}</a></h2>
+                        <p class="post-meta">By ${post.author} on ${post.date} | Category: ${post.category}</p>
+                        <p>${post.excerpt}</p>
+                        <a href="/blog/post.html?slug=${post.slug}" class="btn-secondary">Read More</a>
+                    </div>
+                `).join('');
+            }
+        }
+        document.addEventListener('DOMContentLoaded', loadBlogData);
+    </script>
+</body>
+</html>
