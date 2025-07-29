@@ -6,19 +6,35 @@
       "author": "TechSavvy Reviewer",
       "date": "2025-07-29",
       "category": "Laptops",
-      "excerpt": "Looking for a new laptop? We've rounded up the top contenders for gaming, work, and everyday use in 2025...",
-      "keywords": ["laptops", "best laptops", "gaming laptop", "work laptop", "2025 tech"],
-      "contentFile": "best-laptops-2025.html"
+      "excerpt": "Looking for a new laptop? We've rounded up the top contenders for gaming, work, and everyday use in 2025, considering performance, battery life, and value.",
+      "keywords": ["laptops", "best laptops", "gaming laptop", "work laptop", "2025 tech", "laptop review"],
+      "contentFile": "best-laptops-2025.html",
+      "thumbnail": "laptop-thumbnail.jpg",
+      "image": "best-laptops-main.jpg"
     },
     {
       "slug": "smart-home-essentials",
       "title": "Smart Home Essentials: Devices to Elevate Your Living",
-      "author": "TechSavvy Reviewer",
+      "author": "SmartLiving Expert",
       "date": "2025-07-20",
       "category": "Smart Home",
-      "excerpt": "Transform your home into a smart oasis with these must-have devices...",
-      "keywords": ["smart home", "smart devices", "home automation", "smart lighting"],
-      "contentFile": "smart-home-essentials.html"
+      "excerpt": "Transform your home into a smart oasis with these must-have devices. From smart lighting to security, we cover the essentials for a connected living space.",
+      "keywords": ["smart home", "smart devices", "home automation", "smart lighting", "home security"],
+      "contentFile": "smart-home-essentials.html",
+      "thumbnail": "smart-home-thumbnail.jpg",
+      "image": "smart-home-main.jpg"
+    },
+    {
+      "slug": "beginner-coding-gear",
+      "title": "Essential Gear for Beginner Coders in 2025",
+      "author": "CodeCrafter",
+      "date": "2025-07-15",
+      "category": "Coding & Productivity",
+      "excerpt": "Starting your coding journey? Equip yourself with the right tools! From ergonomic keyboards to powerful monitors, find out what gear can boost your productivity.",
+      "keywords": ["coding gear", "beginner coding", "programmer essentials", "developer setup", "ergonomic keyboard"],
+      "contentFile": "beginner-coding-gear.html",
+      "thumbnail": "coding-thumbnail.jpg",
+      "image": "coding-main.jpg"
     }
   ]
 }
