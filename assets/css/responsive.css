@@ -1,5 +1,5 @@
-/* Mobile: 320px - 768px */
-@media (max-width: 768px) {
+/* Mobile: 320px - 767px */
+@media (max-width: 767px) {
     nav {
         flex-wrap: wrap;
         padding: 0 15px;
@@ -7,6 +7,8 @@
 
     .site-logo {
         flex-grow: 1; /* Allows logo to take available space */
+        text-align: left;
+        padding-left: 0;
     }
 
     #main-nav {
@@ -17,6 +19,7 @@
         margin-top: 10px;
         background-color: #fefefe; /* Background for dropdown menu */
         border-top: 1px solid #eee;
+        padding-bottom: 10px;
     }
 
     #main-nav.active {
@@ -36,10 +39,12 @@
 
     .hamburger-menu {
         display: block; /* Show hamburger on mobile */
+        order: 2; /* Position it after logo */
     }
 
     .hero-section {
-        height: 250px; /* Smaller hero on mobile */
+        height: 300px;
+        margin-bottom: 30px;
     }
 
     .hero-content h1 {
@@ -50,39 +55,105 @@
         font-size: 1rem;
     }
 
-    .product-grid {
+    h1, h2 {
+        font-size: 2rem;
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+    h3 {
+        font-size: 1.5rem;
+    }
+
+    .product-grid, .categories-grid, .blog-posts-grid {
         grid-template-columns: 1fr; /* Single column on mobile */
+        gap: 20px;
+        padding: 0 15px; /* Adjust padding for mobile */
     }
 
     .product-detail {
-        grid-template-columns: 1fr; /* Single column for product image/details on mobile */
+        grid-template-columns: 1fr; /* Single column for product image/details */
+        gap: 30px;
+        padding: 20px 15px;
+    }
+
+    .product-overview {
+        gap: 20px;
+    }
+
+    .product-summary {
+        padding: 20px;
+    }
+
+    .product-description-full, .pros-cons, .comparison-table, .faq-section {
+        padding: 20px;
+        margin-bottom: 30px;
     }
 
     .pros-cons {
         flex-direction: column; /* Stack pros/cons vertically */
+        gap: 20px;
     }
 
-    .newsletter-signup form {
-        flex-direction: column; /* Stack input and button */
-        align-items: center;
+    .newsletter-signup {
+        padding: 30px 15px;
+        margin-top: 30px;
     }
-    .newsletter-signup input[type="email"] {
+
+    .newsletter-form input[type="email"],
+    .newsletter-form .btn-primary {
         width: 100%;
         margin-bottom: 10px;
     }
+    .newsletter-form .btn-primary {
+        margin-bottom: 0; /* Remove margin for the last item */
+    }
 
-    footer ul {
+    .static-page-content {
+        padding: 30px 20px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    .static-page-content h1, .static-page-content h2 {
+        text-align: center;
+    }
+
+    .blog-article {
+        padding: 25px;
+        margin-top: 20px;
+    }
+    .blog-article h1 {
+        font-size: 2.2rem;
+        text-align: center;
+    }
+    .blog-article .post-meta {
+        text-align: center;
+    }
+    .blog-article .article-body h2, .blog-article .article-body h3 {
+        text-align: left; /* Keep internal article headings left */
+    }
+
+    footer .container {
+        padding: 0 15px;
+    }
+    .footer-nav {
         flex-direction: column;
         gap: 10px;
     }
 }
 
-/* Tablet: 768px - 1024px */
-@media (min-width: 769px) and (max-width: 1024px) {
+/* Tablet: 768px - 1023px */
+@media (min-width: 768px) and (max-width: 1023px) {
     .product-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 2-3 columns */
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on tablet */
     }
     .product-detail {
         grid-template-columns: 1fr 1.5fr; /* Adjust for tablet */
+        gap: 30px;
+    }
+    .blog-posts-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on tablet */
+    }
+    .newsletter-form {
+        flex-wrap: nowrap; /* Prevent wrapping on tablet if space allows */
     }
 }
