@@ -1,0 +1,53 @@
+{
+  "products": [
+    {
+      "id": "noise-cancelling-headphones",
+      "name": "Elite Noise-Cancelling Headphones",
+      "category": "Audio",
+      "amazonUrl": "https://www.amazon.com/dp/B08X5XXXF?tag=your-affiliate-id-here",
+      "images": ["headphones-1.webp", "headphones-2.webp", "headphones-3.webp"],
+      "description": "Experience unparalleled audio clarity and silence with the Elite Noise-Cancelling Headphones. Perfect for travel, work, or just escaping the world. Featuring advanced active noise cancellation, comfortable earcups, and long-lasting battery life.",
+      "pros": [
+        "Superior noise cancellation",
+        "Excellent sound quality",
+        "Comfortable for extended wear",
+        "Long battery life (30+ hours)"
+      ],
+      "cons": [
+        "Premium price point",
+        "Can feel bulky for some users"
+      ],
+      "rating": "4.8",
+      "price": "$299.99",
+      "keywords": ["noise cancelling headphones", "audio gear", "bluetooth headphones", "over-ear headphones", "travel headphones"],
+      "faq": [
+        { "question": "Are these headphones wireless?", "answer": "Yes, they are Bluetooth enabled." },
+        { "question": "What is the battery life?", "answer": "Up to 30 hours with ANC enabled." }
+      ],
+      "relatedProducts": ["portable-bluetooth-speaker", "smart-earbuds"]
+    },
+    {
+      "id": "portable-bluetooth-speaker",
+      "name": "Compact Portable Bluetooth Speaker",
+      "category": "Audio",
+      "amazonUrl": "https://www.amazon.com/dp/B09Y6XXXF?tag=your-affiliate-id-here",
+      "images": ["speaker-1.webp", "speaker-2.webp"],
+      "description": "Don't let its size fool you! This compact Bluetooth speaker delivers surprisingly powerful and clear sound, perfect for outdoor adventures or enhancing your home audio. Waterproof and durable.",
+      "pros": [
+        "Incredible sound for its size",
+        "Portable and lightweight",
+        "Waterproof design",
+        "Long battery life"
+      ],
+      "cons": [
+        "Bass can be limited at very high volumes",
+        "No built-in voice assistant"
+      ],
+      "rating": "4.6",
+      "price": "$79.99",
+      "keywords": ["bluetooth speaker", "portable speaker", "waterproof speaker", "outdoor speaker"],
+      "faq": [],
+      "relatedProducts": ["noise-cancelling-headphones"]
+    }
+  ]
+}
