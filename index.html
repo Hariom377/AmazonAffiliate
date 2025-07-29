@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Site Name - Homepage</title>
+    <meta name="description" content="Your site description for SEO">
+    <meta property="og:title" content="Your Site Name - Homepage">
+    <meta property="og:description" content="Your site description for SEO">
+    <meta property="og:image" content="/assets/images/og-image.jpg">
+    <meta property="og:url" content="https://yourdomain.com/">
+    <meta property="og:type" content="website">
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+</head>
+<body id="homepage">
+    <header>
+        <nav>
+            <a href="/" class="site-logo">Your Logo</a>
+            <ul id="main-nav">
+                <li><a href="/">Home</a></li>
+                <li><a href="/products/">Products</a></li>
+                <li><a href="/blog/">Blog</a></li>
+                <li><a href="/about.html">About</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+            </ul>
+            <button class="hamburger-menu">☰</button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <img src="/assets/images/hero-banner.jpg" alt="Hero Banner" class="hero-image">
+            <div class="hero-content">
+                <h1>Discover the Best Gadgets for Your Life</h1>
+                <p>In-depth reviews, comparisons, and expert recommendations for tech enthusiasts.</p>
+                <a href="/products/" class="btn-primary">Explore Products</a>
+            </div>
+        </section>
+
+        <section class="featured-products">
+            <h2>Featured Products</h2>
+            <div class="product-grid" id="featured-products-grid">
+                </div>
+        </section>
+
+        <section class="best-of-categories">
+            <h2>Best Of Categories</h2>
+            <div class="categories-grid" id="categories-grid">
+                </div>
+        </section>
+
+        <section class="recent-blog-posts">
+            <h2>Latest Insights from Our Blog</h2>
+            <div class="blog-posts-grid" id="recent-blog-posts-grid">
+                </div>
+        </section>
+
+        <section class="newsletter-signup">
+            <h2>Stay Updated!</h2>
+            <p>Get the latest tech reviews and deals directly in your inbox.</p>
+            <form action="#" method="POST">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit" class="btn-primary">Subscribe</button>
+            </form>
+        </section>
+
+        <section class="trust-signals">
+            <p>As an Amazon Associate, we earn from qualifying purchases.</p>
+            </section>
+    </main>
+
+    <footer>
+        <p>&copy; <span id="current-year"></span> Your Site Name. All rights reserved.</p>
+        <div class="social-links" id="footer-social-links">
+            </div>
+        <ul>
+            <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="/terms-of-service.html">Terms of Service</a></li>
+            <li><a href="/sitemap.xml">Sitemap</a></li>
+        </ul>
+    </footer>
+
+    <script src="/assets/js/main.js"></script>
+    <script>
+        // Homepage specific rendering logic
+        function renderHomePage() {
+            // Populate featured products
+            const featuredGrid = document.getElementById('featured-products-grid');
+            if (featuredGrid) {
+                const featuredProducts = productsData.slice(0, 8); // Get first 8 products
+                featuredGrid.innerHTML = featuredProducts.map(product => `
+                    <div class="product-card">
+                        <img src="/assets/images/products/${product.images[0]}" alt="${product.name}" loading="lazy">
+                        <h3>${product.name}</h3>
+                        <p class="product-price">${product.price}</p>
+                        <a href="/products/${product.id}.html" class="btn-secondary">View Details</a>
+                    </div>
+                `).join('');
+            }
+
+            // Populate categories (example, needs unique category list from productsData)
+            const categoriesGrid = document.getElementById('categories-grid');
+            if (categoriesGrid) {
+                const uniqueCategories = [...new Set(productsData.map(p => p.category))];
+                categoriesGrid.innerHTML = uniqueCategories.map(category => `
+                    <a href="/products/index.html?category=${encodeURIComponent(category)}" class="category-card">
+                        <h4>${category}</h4>
+                    </a>
+                `).join('');
+            }
+
+            // Populate recent blog posts (placeholder, as blog data isn't in JSON yet)
+            const blogGrid = document.getElementById('recent-blog-posts-grid');
+            if (blogGrid) {
+                // You'll need a similar blog.json structure or manually update for now
+                blogGrid.innerHTML = `
+                    <div class="blog-card">
+                        <h3><a href="/blog/best-laptops-2025.html">Best Laptops of 2025</a></h3>
+                        <p>Discover the top laptops for every need and budget...</p>
+                    </div>
+                    <div class="blog-card">
+                        <h3><a href="/blog/smart-home-essentials.html">Smart Home Essentials</a></h3>
+                        <p>Transform your living space with these smart devices...</p>
+                    </div>
+                `;
+            }
+
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            const footerSocialLinks = document.getElementById('footer-social-links');
+            if (siteConfig.socialMedia && footerSocialLinks) {
+                for (const platform in siteConfig.socialMedia) {
+                    if (siteConfig.socialMedia[platform]) {
+                        footerSocialLinks.innerHTML += `<a href="${siteConfig.socialMedia[platform]}" target="_blank" aria-label="${platform}"><img src="/assets/images/icons/${platform}.svg" alt="${platform} Icon"></a>`;
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
