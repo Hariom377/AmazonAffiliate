@@ -1,13 +1,15 @@
 {
   "siteTitle": "Best Gadgets Ever",
   "siteDescription": "Your one-stop shop for in-depth reviews and affiliate links to the latest and greatest gadgets on Amazon.",
-  "authorName": "TechSavvy Reviewer",
+  "authorName": "Your Name/Brand Name",
   "amazonAffiliateId": "your-affiliate-id-here",
   "socialMedia": {
     "facebook": "https://facebook.com/yourpage",
     "instagram": "https://instagram.com/yourprofile",
-    "twitter": "https://twitter.com/yourhandle"
+    "twitter": "https://twitter.com/yourhandle",
+    "linkedin": "https://linkedin.com/in/yourprofile"
   },
   "contactEmail": "contact@bestgadgetsever.com",
-  "analytics": "UA-XXXXXXXXX-Y"
+  "analytics": "G-XXXXXXXXXX",
+  "ogImage": "https://yourdomain.com/assets/images/og-image.jpg"
 }
