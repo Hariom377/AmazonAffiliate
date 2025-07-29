@@ -4,48 +4,92 @@
       "id": "noise-cancelling-headphones",
       "name": "Elite Noise-Cancelling Headphones",
       "category": "Audio",
+      "brand": "Awesome Audio Inc.",
       "amazonUrl": "https://www.amazon.com/dp/B08X5XXXF?tag=your-affiliate-id-here",
       "images": ["headphones-1.webp", "headphones-2.webp", "headphones-3.webp"],
       "description": "Experience unparalleled audio clarity and silence with the Elite Noise-Cancelling Headphones. Perfect for travel, work, or just escaping the world. Featuring advanced active noise cancellation, comfortable earcups, and long-lasting battery life.",
       "pros": [
-        "Superior noise cancellation",
-        "Excellent sound quality",
-        "Comfortable for extended wear",
-        "Long battery life (30+ hours)"
+        "Superior active noise cancellation",
+        "Exceptional sound quality with deep bass",
+        "Extremely comfortable for long listening sessions",
+        "Impressive 30+ hour battery life",
+        "Intuitive controls and seamless Bluetooth pairing"
       ],
       "cons": [
-        "Premium price point",
-        "Can feel bulky for some users"
+        "Premium price point might not suit all budgets",
+        "Can feel slightly bulky for very small heads",
+        "Lacks full waterproof rating (splash resistant only)"
       ],
       "rating": "4.8",
+      "reviewCount": "1500",
       "price": "$299.99",
-      "keywords": ["noise cancelling headphones", "audio gear", "bluetooth headphones", "over-ear headphones", "travel headphones"],
+      "currency": "USD",
+      "keywords": ["noise cancelling headphones", "audio gear", "bluetooth headphones", "over-ear headphones", "travel headphones", "work headphones", "best headphones"],
       "faq": [
-        { "question": "Are these headphones wireless?", "answer": "Yes, they are Bluetooth enabled." },
-        { "question": "What is the battery life?", "answer": "Up to 30 hours with ANC enabled." }
+        { "question": "Are these headphones wireless?", "answer": "Yes, they are Bluetooth enabled and also come with an audio cable for wired listening." },
+        { "question": "What is the battery life?", "answer": "You can get up to 30 hours of listening with Active Noise Cancellation (ANC) enabled, and even longer without ANC." },
+        { "question": "Are they comfortable for long flights?", "answer": "Absolutely! Designed with plush earcups and a lightweight frame, they are ideal for extended wear during travel." }
       ],
+      "comparisonTable": {
+        "headers": ["Competitor A", "Competitor B"],
+        "rows": [
+          {"feature": "Noise Cancellation", "value": {"noise-cancelling-headphones": "Excellent", "Competitor A": "Good", "Competitor B": "Very Good"}},
+          {"feature": "Battery Life", "value": {"noise-cancelling-headphones": "30 Hrs+", "Competitor A": "25 Hrs", "Competitor B": "28 Hrs"}},
+          {"feature": "Comfort", "value": {"noise-cancelling-headphones": "Superior", "Competitor A": "Good", "Competitor B": "Very Good"}}
+        ]
+      },
       "relatedProducts": ["portable-bluetooth-speaker", "smart-earbuds"]
     },
     {
       "id": "portable-bluetooth-speaker",
       "name": "Compact Portable Bluetooth Speaker",
       "category": "Audio",
+      "brand": "SoundBlast",
       "amazonUrl": "https://www.amazon.com/dp/B09Y6XXXF?tag=your-affiliate-id-here",
       "images": ["speaker-1.webp", "speaker-2.webp"],
       "description": "Don't let its size fool you! This compact Bluetooth speaker delivers surprisingly powerful and clear sound, perfect for outdoor adventures or enhancing your home audio. Waterproof and durable.",
       "pros": [
-        "Incredible sound for its size",
-        "Portable and lightweight",
-        "Waterproof design",
-        "Long battery life"
+        "Incredible sound quality for its size",
+        "Highly portable and lightweight design",
+        "Fully waterproof (IPX7 rated)",
+        "Long 15-hour battery life",
+        "Robust and durable build quality"
       ],
       "cons": [
-        "Bass can be limited at very high volumes",
-        "No built-in voice assistant"
+        "Bass can be limited at very high volumes in large spaces",
+        "No built-in voice assistant (e.g., Alexa, Google Assistant)"
       ],
       "rating": "4.6",
+      "reviewCount": "800",
       "price": "$79.99",
-      "keywords": ["bluetooth speaker", "portable speaker", "waterproof speaker", "outdoor speaker"],
+      "currency": "USD",
+      "keywords": ["bluetooth speaker", "portable speaker", "waterproof speaker", "outdoor speaker", "travel speaker"],
+      "faq": [],
+      "relatedProducts": ["noise-cancelling-headphones"]
+    },
+    {
+      "id": "smart-earbuds",
+      "name": "Ultra-Compact Smart Earbuds",
+      "category": "Audio",
+      "brand": "HearAll",
+      "amazonUrl": "https://www.amazon.com/dp/B09Z6XXXG?tag=your-affiliate-id-here",
+      "images": ["earbuds-1.webp", "earbuds-2.webp"],
+      "description": "Experience true wireless freedom with these ultra-compact smart earbuds. Featuring active noise cancellation, crystal-clear calls, and a comfortable fit for all-day wear.",
+      "pros": [
+        "Excellent noise cancellation for earbuds",
+        "Snug and comfortable fit",
+        "Great call quality",
+        "Compact charging case with long battery life"
+      ],
+      "cons": [
+        "Premium price",
+        "Touch controls can be finicky"
+      ],
+      "rating": "4.7",
+      "reviewCount": "1200",
+      "price": "$199.99",
+      "currency": "USD",
+      "keywords": ["wireless earbuds", "noise cancelling earbuds", "bluetooth earbuds", "true wireless", "in-ear headphones"],
       "faq": [],
       "relatedProducts": ["noise-cancelling-headphones"]
     }
